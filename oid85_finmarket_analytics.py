@@ -2,6 +2,7 @@ import time
 import os
 import shutil
 import config
+import json
 
 
 def deploy():
@@ -37,12 +38,18 @@ def deploy():
     res = os.system(cmd)
     print(res)
 
-    # копируем appsettings.json
-    shutil.copy(config.finmarket_analytics_appsettings_file, dest_path)
+    # редактируем appsettings.json
+    appsettings_file_path = os.path.join(dest_path, config.finmarket_analytics_appsettings_file)
+    with open(appsettings_file_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
 
-    exe_file_path = os.path.join(dest_path, config.finmarket_analytics_exe_file_name)
+    data['DeployPort'] = config.finmarket_analytics_deploy_port
+
+    with open(appsettings_file_path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
 
     # установка и запуск службы
+    exe_file_path = os.path.join(dest_path, config.finmarket_analytics_exe_file_name)
     cmd = f'sc create {config.finmarket_analytics_service_name} binPath={exe_file_path}'
     print(cmd)
     res = os.system(cmd)

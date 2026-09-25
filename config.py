@@ -5,3 +5,4 @@ finmarket_analytics_deploy_directory = 'Oid85.FinMarket.Analytics'
 finmarket_analytics_exe_file_name = "Oid85.FinMarket.Analytics.WebHost.exe"
 finmarket_analytics_service_name = 'Oid85.FinMarket.Analytics'
 finmarket_analytics_appsettings_file = 'appsettings.json'
+finmarket_analytics_deploy_port = 6101
